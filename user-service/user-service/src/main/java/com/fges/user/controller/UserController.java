@@ -5,16 +5,15 @@ import com.fges.user.service.UserService;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
-@Slf4j
+
 public class UserController {
 
     @Autowired
@@ -26,4 +25,18 @@ public class UserController {
         return userService.saveUser(user);
     }
 
+    @GetMapping("/")
+    public List<User> getAll(){
+        return userService.getAll();
+    }
+
+    @GetMapping("/lastName/{userName}")
+    public User getUserByName(@PathVariable String userName) throws Exception {
+        return userService.getUserByName(userName);
+    }
+
+    @GetMapping("/id/{userId}")
+    public User getUserById(@PathVariable Long userId) throws Exception {
+        return userService.getUserById(userId);
+    }
 }
