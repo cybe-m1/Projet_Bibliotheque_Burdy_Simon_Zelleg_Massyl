@@ -27,3 +27,7 @@ Un ado ne peut pas emprunter un livre "adulte".
 On peut créer un compte sans être authentifié.
 
 Mais le reste des actions doivent être réservées aux utilisateurs authentifiés.
+
+### Commentaire 
+Un utilisaeur peut laisser un commentaire une fois qu'il a rendu le livre, 
+Il est associé au livre et à l'utilisateur 

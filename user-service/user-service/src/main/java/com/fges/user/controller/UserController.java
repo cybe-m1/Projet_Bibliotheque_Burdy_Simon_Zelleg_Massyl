@@ -1,5 +1,6 @@
 package com.fges.user.controller;
 
+import com.fges.user.UserNotFoundException;
 import com.fges.user.entity.User;
 import com.fges.user.service.UserService;
 
@@ -19,13 +20,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/")
+    @PostMapping
     public User saveUser(@RequestBody User user ){
-        //log.info("Dans saveUser de UserController");
         return userService.saveUser(user);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<User> getAll(){
         return userService.getAll();
     }
@@ -39,4 +39,17 @@ public class UserController {
     public User getUserById(@PathVariable Long userId) throws Exception {
         return userService.getUserById(userId);
     }
+
+    @PutMapping
+    public User update(@RequestBody User user) throws UserNotFoundException {
+        return userService.updateUser(user);
+    }
+
+    @DeleteMapping(value="/delete/{userId}")
+    public User delete(@PathVariable Long userId) throws Exception {
+        User toDelete = userService.getUserById(userId);
+        userService.deleteUserById(userId);
+        return toDelete;
+    }
+
 }
