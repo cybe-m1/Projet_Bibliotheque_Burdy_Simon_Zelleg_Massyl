@@ -7,6 +7,8 @@ import com.fges.book.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/books")
 public class BookController {
@@ -16,6 +18,10 @@ public class BookController {
     @PostMapping
     public Book saveBook( @RequestBody Book book){
         return bookService.saveBook(book);
+    }
+    @GetMapping
+    public List<Book> getAll(){
+        return bookService.getAll();
     }
 
     @GetMapping("/id/{bookId}")
