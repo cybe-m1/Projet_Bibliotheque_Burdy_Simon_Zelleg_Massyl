@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     Optional<Comment> findCommentByCommentId(Long commentId);
-    //Optional<Comment> findByTitle(String title);
+    Optional<Comment> findByTitle(String title);
 }

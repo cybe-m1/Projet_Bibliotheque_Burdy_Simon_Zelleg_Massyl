@@ -20,7 +20,6 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long commentId;
-    //private String title;
+    private String title;
     private String content;
-    private float grade;
 }

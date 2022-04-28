@@ -7,10 +7,9 @@ import com.fges.comment.entity.Comment;
 import com.fges.comment.repository.CommentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 
-@Service
+
 public class CommentService {
 
     @Autowired
@@ -24,9 +23,9 @@ public class CommentService {
         return commentRepository.findAll();
     }
 
-    //public Comment getCommentByTitle(String title) throws Exception{
-      //  return commentRepository.findByTitle(title).orElseThrow( () -> new Exception("Comment not found"));
-    //}
+    public Comment getCommentByTitle(String title) throws Exception{
+        return commentRepository.findByTitle(title).orElseThrow( () -> new Exception("Comment not found"));
+    }
 
     public Comment getCommentById(Long commentId) throws Exception{
         return commentRepository.findCommentByCommentId(commentId).orElseThrow(() -> new Exception("Comment not found"));
