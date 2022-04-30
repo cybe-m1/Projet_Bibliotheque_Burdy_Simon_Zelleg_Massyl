@@ -1,13 +1,12 @@
 package com.fges.book.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import lombok.*;
 
-@Entity
+import java.util.List;
+
+@Entity(name = "book")
 @Data
 @NoArgsConstructor
 @Getter
@@ -19,4 +18,7 @@ public class Book {
     private String name;
     private String category;
 
+
+    @OneToMany(mappedBy = "book")
+    private List<BookUser> users;
 }
