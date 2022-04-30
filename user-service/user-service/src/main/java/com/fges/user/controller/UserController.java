@@ -1,6 +1,7 @@
 package com.fges.user.controller;
 
 import com.fges.user.UserNotFoundException;
+import com.fges.user.VO.ResponseTemplateVO;
 import com.fges.user.entity.User;
 import com.fges.user.service.UserService;
 
@@ -51,5 +52,12 @@ public class UserController {
         userService.deleteUserById(userId);
         return toDelete;
     }
+
+    @GetMapping("/{id}")
+    public ResponseTemplateVO getUserWithBooks(@PathVariable("id") Long userId){
+        return  userService.getUserWithBooks(userId);
+    }
+
+
 
 }
