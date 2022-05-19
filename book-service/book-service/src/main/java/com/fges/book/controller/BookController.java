@@ -5,6 +5,8 @@ import com.fges.book.entity.Book;
 import com.fges.book.service.BookService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,6 +46,13 @@ public class BookController {
         Book toDelete = bookService.getBookById(bookId);
         bookService.deleteBookById(bookId);
         return toDelete;
+    }
+
+
+   @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Book>> getBooksByUserId(@PathVariable(value = "userId") Long userId) throws BookNotFoundException {
+        List<Book> books = bookService.findBooksByUserId(userId);
+        return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
 }

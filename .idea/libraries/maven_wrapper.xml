@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="maven-wrapper">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/comment-service/comment-service/.mvn/wrapper/maven-wrapper.jar!/" />
+      <root url="jar://$PROJECT_DIR$/book-service/book-service/.mvn/wrapper/maven-wrapper.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
