@@ -4,6 +4,7 @@ import com.fges.book.BookNotFoundException;
 import com.fges.book.entity.Book;
 import com.fges.book.service.BookService;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,12 +12,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/books")
+@Slf4j
 public class BookController {
     @Autowired
     private BookService bookService;
 
     @PostMapping
     public Book saveBook( @RequestBody Book book){
+        log.info("Inside saveBook method of BookController");
         return bookService.saveBook(book);
     }
     @GetMapping
@@ -26,6 +29,7 @@ public class BookController {
 
     @GetMapping("/id/{bookId}")
     public Book getBookById(@PathVariable("bookId") Long bookId ) throws Exception{
+        log.info("Inside findBookById method of BookController");
         return bookService.getBookById(bookId);
     }
 

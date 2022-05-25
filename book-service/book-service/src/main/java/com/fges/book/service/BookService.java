@@ -2,17 +2,19 @@ package com.fges.book.service;
 import com.fges.book.BookNotFoundException;
 import com.fges.book.entity.Book;
 import com.fges.book.repository.BookRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-
+@Slf4j
 public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
     public Book saveBook(Book book) {
+        log.info("Inside saveBook of BookService");
         return bookRepository.save(book);
     }
 
@@ -25,6 +27,7 @@ public class BookService {
     }
     
     public Book getBookById(Long bookId) throws Exception{
+        log.info("Inside getBookById of BookService");
         return bookRepository.findBookByBookId(bookId).orElseThrow(() -> new Exception("Book not found"));
     }
 

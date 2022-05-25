@@ -1,6 +1,7 @@
 package com.fges.user.controller;
 
 import com.fges.user.UserNotFoundException;
+import com.fges.user.VO.ResponseTemplateVO;
 import com.fges.user.entity.User;
 import com.fges.user.service.UserService;
 
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-
+@Slf4j
 public class UserController {
 
     @Autowired
@@ -25,6 +26,11 @@ public class UserController {
         return userService.saveUser(user);
     }
 
+    /*@GetMapping("/{userid}")
+    public ResponseTemplateVO getUserWithBook(@PathVariable Long userId){
+        log.info("Inside of getUserWithBook of UserController")
+        return userService.getUserWithBook(userId);
+    }*/
     @GetMapping
     public List<User> getAll(){
         return userService.getAll();
