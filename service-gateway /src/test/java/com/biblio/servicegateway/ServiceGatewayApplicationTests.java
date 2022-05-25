@@ -1,10 +1,10 @@
-package com.fges.gatewayserver;
+package com.biblio.servicegateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GatewayServerApplicationTests {
+class ServiceGatewayApplicationTests {
 
 	@Test
 	void contextLoads() {
