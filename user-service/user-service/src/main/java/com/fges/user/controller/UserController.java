@@ -46,6 +46,11 @@ public class UserController {
         return userService.getUserById(userId);
     }
 
+    @PostMapping("/userIds")
+    public List<User> getUsersByIds(@RequestBody Long[] userIds){
+        return userService.getUsersByIds(List.of(userIds));
+    }
+
     @PutMapping
     public User update(@RequestBody User user) throws UserNotFoundException {
         return userService.updateUser(user);

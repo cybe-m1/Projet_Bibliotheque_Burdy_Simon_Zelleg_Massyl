@@ -3,13 +3,16 @@ package com.fges.book.controller;
 import com.fges.book.BookNotFoundException;
 import com.fges.book.entity.Book;
 import com.fges.book.entity.BookAssignRequestDto;
+import com.fges.book.entity.UserDTO;
 import com.fges.book.service.BookService;
 
 
 //import lombok.extern.slf4j.XSlf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -19,14 +22,14 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    /*@Autowired
+    @Autowired
     private RestTemplate restTemplate;
 
     @GetMapping("/users")
     public List<Object> getUsers(){
         Object[] users = restTemplate.getForObject("http://USER-SERVICE/users", Object[].class);
         return Arrays.asList(users);
-    }*/
+    }
 
     @PostMapping
     public Book saveBook( @RequestBody Book book){
@@ -42,6 +45,11 @@ public class BookController {
     public Book bookPrint(@PathVariable("bookId") Long bookId, @RequestBody BookAssignRequestDto bookAssign) throws Exception {
         return bookService.bookPrint(bookId, bookAssign.getUserId());
     }
+
+    /*@GetMapping("/id/{bookId}/users")
+    public List<UserDTO> getUsersByBookId(@PathVariable("bookId") Long bookId){
+        return bookService.getUsersByBookId(bookId);
+    }*/
 
     @GetMapping("/id/{bookId}")
     public Book getBookById(@PathVariable("bookId") Long bookId ) throws Exception{

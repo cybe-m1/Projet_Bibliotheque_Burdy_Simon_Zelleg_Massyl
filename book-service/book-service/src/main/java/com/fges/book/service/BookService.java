@@ -1,11 +1,13 @@
 package com.fges.book.service;
 import com.fges.book.BookNotFoundException;
 import com.fges.book.entity.Book;
+import com.fges.book.entity.UserDTO;
 import com.fges.book.repository.BookRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -25,6 +27,12 @@ public class BookService {
     public Book bookPrint(Long bookId, Long userId) throws Exception {
         return bookPrint(getBookById(bookId), userId);
     }
+
+    /*public List<UserDTO> getUsersByBookId(Long bookId){
+        Optional<List<Long>> userIds = bookRepository.getUserIdsByBookId(bookId);
+        //requete de batard avec le rest Template
+        return;
+    }*/
     public List<Book> getAll(){
         return bookRepository.findAll();
     }

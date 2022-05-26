@@ -35,6 +35,10 @@ public class UserService {
         return userRepository.findByName(name).orElseThrow(() -> new Exception("User not found"));
     }
 
+    public List<User> getUsersByIds(List<Long> userIds){
+        return userRepository.findByUserIdIn(userIds);
+    }
+
     public User getUserById(Long userId) throws Exception{
         return userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
     }
