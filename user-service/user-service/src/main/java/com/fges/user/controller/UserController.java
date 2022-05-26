@@ -46,9 +46,11 @@ public class UserController {
         return userService.getUserById(userId);
     }
 
-    @PostMapping("/userIds")
-    public List<User> getUsersByIds(@RequestBody Long[] userIds){
-        return userService.getUsersByIds(List.of(userIds));
+    //@RequestMapping(value="/userIds/[{userIds}]", method=RequestMethod.GET)
+    //@ResponseBody
+    @GetMapping("/userIds/{userIds}")
+    public List<User> getUsersByIds(@PathVariable List<Long> userIds){
+        return userService.getUsersByIds(userIds);
     }
 
     @PutMapping
