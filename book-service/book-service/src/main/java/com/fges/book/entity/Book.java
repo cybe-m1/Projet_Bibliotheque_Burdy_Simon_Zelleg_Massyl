@@ -1,11 +1,10 @@
 package com.fges.book.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -19,5 +18,6 @@ public class Book {
     private Long bookId;
     private String name;
     private String category;
-
+    @ElementCollection
+    List<Long> usersIds; // ids, liste vide à la creation
 }

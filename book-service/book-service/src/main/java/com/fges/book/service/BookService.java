@@ -18,6 +18,13 @@ public class BookService {
         return bookRepository.save(book);
     }
 
+    public Book bookPrint(Book book, Long userId){
+        book.getUsersIds().add(userId);
+        return bookRepository.save(book);
+    }
+    public Book bookPrint(Long bookId, Long userId) throws Exception {
+        return bookPrint(getBookById(bookId), userId);
+    }
     public List<Book> getAll(){
         return bookRepository.findAll();
     }
