@@ -19,4 +19,16 @@ public class User {
     private String name;
     private String email;
     private Integer age;
+
+    public String getAgeCategorie(){
+        String categ = "";
+        if(this.age <= 13){
+            categ = "children";
+        }
+        else if (this.age <= 18){
+            categ =  "teenage";
+        }
+        else categ =  "adult";
+        return categ;
+    }
 }

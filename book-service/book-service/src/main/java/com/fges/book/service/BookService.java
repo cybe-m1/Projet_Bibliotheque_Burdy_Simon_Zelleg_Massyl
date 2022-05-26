@@ -6,6 +6,8 @@ import com.fges.book.repository.BookRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,10 +30,8 @@ public class BookService {
         return bookPrint(getBookById(bookId), userId);
     }
 
-    /*public List<UserDTO> getUsersByBookId(Long bookId){
-        Optional<List<Long>> userIds = bookRepository.getUserIdsByBookId(bookId);
-        //requete de batard avec le rest Template
-        return;
+    /*public List<Long> getUsersIdsByBookId(Long bookId){
+        return bookRepository.findUserIdsByBookId(bookId);
     }*/
     public List<Book> getAll(){
         return bookRepository.findAll();

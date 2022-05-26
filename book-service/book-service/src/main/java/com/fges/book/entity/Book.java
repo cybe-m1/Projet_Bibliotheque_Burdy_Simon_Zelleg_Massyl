@@ -19,5 +19,6 @@ public class Book {
     private String name;
     private String category;
     @ElementCollection
+    @CollectionTable(name = "book_users_ids", joinColumns = @JoinColumn(name = "book_id"))
     List<Long> usersIds; // ids, liste vide à la creation
 }

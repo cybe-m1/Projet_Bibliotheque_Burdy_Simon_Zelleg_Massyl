@@ -1,6 +1,7 @@
 package com.fges.book.controller;
 
 import com.fges.book.BookNotFoundException;
+import com.fges.book.UserIdNotFound;
 import com.fges.book.entity.Book;
 import com.fges.book.entity.BookAssignRequestDto;
 import com.fges.book.entity.UserDTO;
@@ -14,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/books")
@@ -46,10 +48,19 @@ public class BookController {
         return bookService.bookPrint(bookId, bookAssign.getUserId());
     }
 
-    /*@GetMapping("/id/{bookId}/users")
-    public List<UserDTO> getUsersByBookId(@PathVariable("bookId") Long bookId){
-        return bookService.getUsersByBookId(bookId);
-    }*/
+    @GetMapping("/id/{bookId}/users")
+    public Object[] getUsersByBookId(@PathVariable("bookId") Long bookId) throws Exception, UserIdNotFound {
+        List<Long> userIds = bookService.getBookById(bookId).getUsersIds();
+        if (!userIds.isEmpty()) {
+            String userIdsParsed = userIds.stream().map(Object::toString)
+                    .collect(Collectors.joining(","));
+            //String userIdsParsed = String.join((CharSequence) ",", (CharSequence) userIds);
+            return restTemplate.getForObject("http://USER-SERVICE/users/userIds/" + userIdsParsed, Object[].class);
+        } else {
+            throw new UserIdNotFound("No User for this Book !");
+        }
+    }
+
 
     @GetMapping("/id/{bookId}")
     public Book getBookById(@PathVariable("bookId") Long bookId ) throws Exception{
