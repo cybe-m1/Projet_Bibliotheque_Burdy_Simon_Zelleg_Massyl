@@ -8,7 +8,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-//@EnableWebSecurity
+import javax.ws.rs.HttpMethod;
+
+@Configuration
+@EnableWebSecurity
 public class WebSecurityConfig {
 
     private static final String[] WHITE_LIST_URLS = {
@@ -33,14 +36,23 @@ public class WebSecurityConfig {
     }
 
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+        /*http
                 .cors()
                 .and()
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .antMatchers("/**").permitAll();
+                .antMatchers(WHITE_LIST_URLS).permitAll();
 
+        return http.build();*/
+        System.out.println("called1");
+        http.csrf().disable().authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers(HttpMethod.POST,"/users").permitAll()
+                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.POST,"/users/*").permitAll()
+                .antMatchers(HttpMethod.GET,"/users/*").permitAll()
+                .anyRequest().authenticated();
         return http.build();
     }
 }

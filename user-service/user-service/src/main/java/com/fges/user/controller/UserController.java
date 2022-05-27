@@ -38,6 +38,15 @@ public class UserController {
         return "Success registration !";
     }
 
+    @GetMapping("/verifyRegistration")
+    public String verifyRegistration(@RequestParam("token") String token){
+        String result = userService.validateVerificationToken(token);
+        if(result.equalsIgnoreCase("valid")){
+            return "User Verifies Successfully";
+        }
+        return "Bad User";
+    }
+
     private String applicationUrl(HttpServletRequest request) {
         return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     }
