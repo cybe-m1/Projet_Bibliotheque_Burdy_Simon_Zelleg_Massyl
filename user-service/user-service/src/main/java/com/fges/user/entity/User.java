@@ -1,9 +1,6 @@
 package com.fges.user.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import lombok.*;
 
@@ -19,7 +16,9 @@ public class User {
     private String name;
     private String email;
     private Integer age;
-
+    @Column(length = 60)
+    private String password;
+    private boolean enabled = false;
     public String getAgeCategorie(){
         String categ = "";
         if(this.age <= 13){

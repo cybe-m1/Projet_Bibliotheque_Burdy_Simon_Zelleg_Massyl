@@ -4,10 +4,16 @@ import com.fges.user.UserNotFoundException;
 import com.fges.user.VO.Book;
 import com.fges.user.VO.ResponseTemplateVO;
 import com.fges.user.entity.User;
+import com.fges.user.entity.VerificationToken;
+import com.fges.user.model.UserModel;
 import com.fges.user.repository.UserRepository;
 
+import com.fges.user.repository.VerificationTokenRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,9 +24,21 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private VerificationTokenRepository verificationTokenRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    //@Autowired
-    //private RestTemplate restTemplate;
+    public User registerUser(UserModel userModel){
+        User user = new User();
+        user.setEmail(userModel.getEmail());
+        user.setName(userModel.getName());
+        user.setAge(userModel.getAge());
+        user.setPassword(passwordEncoder.encode(userModel.getPassword()));
+
+        userRepository.save(user);
+        return user;
+    }
 
     public User saveUser(User user) {
         //log.info("Dans saveUser de UserService");
@@ -58,16 +76,12 @@ public class UserService {
         }
     }
 
-    /*public ResponseTemplateVO getUserWithBook(Long userId) {
-        log.info("Inside getUserWithBook of UserService");
-        ResponseTemplateVO vo = new ResponseTemplateVO();
-        User user = userRepository.findByUserId(userId);
-        Book book =
-                restTemplate.getForObject("http://localhost:9001/books/" + user.getBookById()
-                        ,Book.class );
-        vo.setUser(user);
-        vo.setBook(book);
+    public void saveVerificationTokenForUser(String token, User user) {
+        VerificationToken verificationToken
+                = new VerificationToken(user, token);
+        //Save user and token to the database
+        verificationTokenRepository.save(verificationToken);
+    }
 
-        return vo;
-    }*/
+
 }

@@ -15,7 +15,10 @@ spring:
           uri: lb://BOOK-SERVICE
           predicates:
             - Path=/books/**
-
+        - id: COMMENT-SERVICE
+          uri: lb://COMMENT-SERVICE
+          predicates:
+            - Path=/comments/**
 
 eureka:
   client:

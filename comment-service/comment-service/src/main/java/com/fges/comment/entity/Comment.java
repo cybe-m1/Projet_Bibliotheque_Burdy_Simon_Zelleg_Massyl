@@ -20,7 +20,13 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long commentId;
-    //private String title;
     private String content;
     private float grade;
+
+    public void setGrade(float grade){
+        if(grade < 0 || grade > 10 ){
+            throw new IllegalArgumentException(grade + "is not a valid grade, please use a notation between 0 and 10");
+        }
+        this.grade = grade;
+    }
 }
