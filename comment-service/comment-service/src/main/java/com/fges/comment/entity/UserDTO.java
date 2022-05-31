@@ -1,11 +1,10 @@
-package com.fges.book.entity;
+package com.fges.comment.entity;
 
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,5 +20,4 @@ public class UserDTO {
     private String name;
     private String email;
     private Integer age;
-    private Integer numberofBooks = 0;
 }

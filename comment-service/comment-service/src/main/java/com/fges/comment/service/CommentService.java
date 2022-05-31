@@ -48,6 +48,7 @@ public class CommentService {
     }
 
 
-
-
+    public List<Comment> getCommentsByBookId(Long bookId) {
+        return commentRepository.findCommentsByBookId(bookId);
+    }
 }

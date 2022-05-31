@@ -3,18 +3,18 @@ package com.fges.user.controller;
 import com.fges.user.UserNotFoundException;
 import com.fges.user.VO.ResponseTemplateVO;
 import com.fges.user.entity.User;
-import com.fges.user.event.RegistrationCompleteEvent;
-import com.fges.user.model.UserModel;
 import com.fges.user.service.UserService;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -25,31 +25,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private ApplicationEventPublisher publisher;
-    @PostMapping("/register")
-    public String registerUser(@RequestBody UserModel userModel, final HttpServletRequest request) {
-        log.info("----------REGISTER USER CONTROLLER");
-        User user = userService.registerUser(userModel);
-        publisher.publishEvent(new RegistrationCompleteEvent(
-                user,
-                applicationUrl(request)
-        ));
-        return "Success registration !";
-    }
-
-    @GetMapping("/verifyRegistration")
-    public String verifyRegistration(@RequestParam("token") String token){
-        String result = userService.validateVerificationToken(token);
-        if(result.equalsIgnoreCase("valid")){
-            return "User Verifies Successfully";
-        }
-        return "Bad User";
-    }
-
-    private String applicationUrl(HttpServletRequest request) {
-        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-    }
+    /*@RequestMapping("/user")
+    @ResponseBody
+    public Principal user(Principal principal){
+        return principal;
+    }*/
 
     @PostMapping
     public User saveUser(@RequestBody User user ){

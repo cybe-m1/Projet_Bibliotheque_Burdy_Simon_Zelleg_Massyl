@@ -54,7 +54,6 @@ public class BookController {
         if (!userIds.isEmpty()) {
             String userIdsParsed = userIds.stream().map(Object::toString)
                     .collect(Collectors.joining(","));
-            //String userIdsParsed = String.join((CharSequence) ",", (CharSequence) userIds);
             return restTemplate.getForObject("http://USER-SERVICE/users/userIds/" + userIdsParsed, Object[].class);
         } else {
             throw new UserIdNotFound("No User for this Book !");

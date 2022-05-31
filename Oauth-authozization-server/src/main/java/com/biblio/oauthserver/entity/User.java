@@ -1,8 +1,14 @@
-package com.fges.user.entity;
+package com.biblio.oauthserver.entity;
 
-import javax.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import lombok.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 @Data
@@ -15,14 +21,8 @@ public class User {
     private Long userId;
     private String name;
     private String email;
-    private Integer age;
-    @Column(length = 60)
     private String password;
-    private String role;
-    private boolean enabled = false;
-    @Enumerated(EnumType.STRING)
-    @Column(name="auth_provider")
-    private AuthentificationProvider authProvider;
+    private Integer age;
     //private Integer number_of_books = 0;
     public String getAgeCategorie(){
         String categ = "";
@@ -36,3 +36,5 @@ public class User {
         return categ;
     }
 }
+
+
