@@ -1,9 +1,8 @@
-package com.fges.user.entity;
-
-import javax.persistence.*;
+package com.userservice.userservice.domain;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -19,7 +18,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
-    private String userName;
+    private String name;
+    private String username;
     private String email;
     private Integer age;
     private String password;

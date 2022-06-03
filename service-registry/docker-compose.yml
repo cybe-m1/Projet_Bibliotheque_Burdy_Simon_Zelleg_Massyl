@@ -1,8 +1,0 @@
-version: '3.6'
-
-services:
-  app:
-      container_name: app_registry
-      build: .
-      ports:
-        - "8761:8761"

@@ -2,28 +2,9 @@ server :
   port: 9002
 
 spring:
-   application:
+  application:
     name: USER-SERVICE
-   security:
-     oauth2:
-       client:
-         registration:
-           google:
-             client-id: 816852736452-8s4nntribofpe6rb70htqb9ch6l79enr.apps.googleusercontent.com
-             client-secret: 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
-             scope:
-             - email
-             - profile
 
-  #datasource:
-  #  url: jdbc:mysql://localhost:3306/user_service
-  #  username: root
-  #  password: root
-  #  driver-class-name: com.mysql.cj.jdbc.Driver
-  #jpa:
-  #  show-sql: true
-  #  hibernate:
-  #    ddl-auto: update
 eureka:
   client:
     register-with-eureka: true
@@ -32,3 +13,7 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
     instance:
       hostname: localhost
+
+
+
+
