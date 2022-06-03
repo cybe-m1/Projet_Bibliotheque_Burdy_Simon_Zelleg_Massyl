@@ -9,6 +9,7 @@ import com.fges.book.service.BookService;
 
 
 //import lombok.extern.slf4j.XSlf4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/books")
+@Slf4j
 //@XSlf4j
 public class BookController {
     @Autowired
@@ -54,7 +56,8 @@ public class BookController {
         if (!userIds.isEmpty()) {
             String userIdsParsed = userIds.stream().map(Object::toString)
                     .collect(Collectors.joining(","));
-            return restTemplate.getForObject("http://USER-SERVICE/users/userIds/" + userIdsParsed, Object[].class);
+            log.info("userIdParsed : {}", userIdsParsed);
+            return restTemplate.getForObject("http://localhost:8080/api/userIds/" + userIdsParsed, Object[].class);
         } else {
             throw new UserIdNotFound("No User for this Book !");
         }
