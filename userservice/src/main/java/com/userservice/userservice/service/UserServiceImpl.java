@@ -1,5 +1,6 @@
 package com.userservice.userservice.service;
 
+import com.userservice.userservice.UserNotFoundException;
 import com.userservice.userservice.domain.Role;
 import com.userservice.userservice.domain.User;
 import com.userservice.userservice.repo.RoleRepo;
@@ -79,4 +80,37 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepo.findAll();
     }
 
+    public User getUserById(Long userId) throws Exception{
+        return userRepo.findById(userId).orElseThrow(() -> new Exception("User not found"));
+    }
+
+    public List<User> getUsersByIds(List<Long> userIds){
+        return userRepo.findByUserIdIn(userIds);
+    }
+
+    public User updateUser(User user) throws UserNotFoundException {
+        if(userRepo.existsById(user.getUserId())) {
+            return userRepo.save(user);
+        }
+        throw new UserNotFoundException("User does not exist ...");
+    }
+
+    public void deleteUserById(Long userId) throws UserNotFoundException {
+        if(userRepo.existsById(userId)) {
+            userRepo.deleteById(userId);
+        } else {
+            throw new UserNotFoundException("User does not exist ...");
+        }
+    }
+
+    public Integer getNumberOfBooksByUserId(Long userId) throws Exception{
+        User user = userRepo.findById(userId).orElseThrow(() -> new Exception("User not found"));
+        return user.getNumberOfBooks();
+    }
+
+    public Integer incrNumberofBooksForUser(Long userId) throws Exception {
+        User user = userRepo.findById(userId).orElseThrow(() -> new Exception("User not found"));
+        user.setNumberOfBooks(user.getNumberOfBooks() + 1);
+        return user.getNumberOfBooks();
+    }
 }

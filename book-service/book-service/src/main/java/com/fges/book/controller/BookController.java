@@ -47,7 +47,15 @@ public class BookController {
 
     @PutMapping("/id/{bookId}")
     public Book bookPrint(@PathVariable("bookId") Long bookId, @RequestBody BookAssignRequestDto bookAssign) throws Exception {
-        return bookService.bookPrint(bookId, bookAssign.getUserId());
+        //Requete sur le service user -> ajoute +1 a l'attribut numberOfBooks du user
+        Integer countNumberOfBooks = restTemplate.getForObject("http://USER-SERVICE/api/number-of-books/" + bookAssign.getUserId(), Integer.class);
+        log.info("user with id : {} has {} number of books", bookAssign.getUserId(),countNumberOfBooks);
+        if(countNumberOfBooks < 3) {
+            Integer newNumberOfBooks = restTemplate.getForObject("http://USER-SERVICE/api/incr-number-of-books/" + bookAssign.getUserId(), Integer.class);
+            log.info("new number of books : {}", bookAssign.getUserId());
+            return bookService.bookPrint(bookId, bookAssign.getUserId());
+        }
+        return bookService.getBookById(bookId);
     }
 
     @GetMapping("/id/{bookId}/users")
@@ -57,7 +65,7 @@ public class BookController {
             String userIdsParsed = userIds.stream().map(Object::toString)
                     .collect(Collectors.joining(","));
             log.info("userIdParsed : {}", userIdsParsed);
-            return restTemplate.getForObject("http://localhost:8080/api/userIds/" + userIdsParsed, Object[].class);
+            return restTemplate.getForObject("http://USER-SERVICE/api/userIds/" + userIdsParsed, Object[].class);
         } else {
             throw new UserIdNotFound("No User for this Book !");
         }

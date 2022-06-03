@@ -23,6 +23,7 @@ public class User {
     private String email;
     private Integer age;
     private String password;
+    private Integer numberOfBooks = 0;
     @ManyToMany(fetch = EAGER)
     private Collection<Role> roles = new ArrayList<>();
     public String getAgeCategorie(){

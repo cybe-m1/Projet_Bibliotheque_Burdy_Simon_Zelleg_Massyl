@@ -51,10 +51,42 @@ public class UserRessource {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
+    @GetMapping("/userIds/{userIds}")
+    public List<User> getUsersByIds(@PathVariable List<Long> userIds){
+        return userService.getUsersByIds(userIds);
+    }
+
     @PostMapping("/user/save")
     public ResponseEntity<User> saveUser(@RequestBody User user){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/user/save").toUriString());
         return ResponseEntity.created(uri).body(userService.saveUser(user));
+    }
+
+    @GetMapping("/id/{userId}")
+    public User getUserById(@PathVariable Long userId) throws Exception {
+        return userService.getUserById(userId);
+    }
+
+    @GetMapping("/number-of-books/{userId}")
+    public Integer getNumberOfBooksByUserId(@PathVariable Long userId) throws Exception {
+        return userService.getNumberOfBooksByUserId(userId);
+    }
+
+    @GetMapping("/incr-number-of-books/{userId}")
+    public Integer incrNumberofBooksForUser(@PathVariable Long userId) throws Exception{
+        return userService.incrNumberofBooksForUser(userId);
+    }
+
+    @PutMapping
+    public User update(@RequestBody User user) throws Exception {
+        return userService.updateUser(user);
+    }
+
+    @DeleteMapping(value="/delete/{userId}")
+    public User delete(@PathVariable Long userId) throws Exception {
+        User toDelete = userService.getUserById(userId);
+        userService.deleteUserById(userId);
+        return toDelete;
     }
 
     @PostMapping("/role/save")
@@ -62,6 +94,8 @@ public class UserRessource {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/role/save").toUriString());
         return ResponseEntity.created(uri).body(userService.saveRole(role));
     }
+
+
 
     @PostMapping("/role/addtouser")
     public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form){
