@@ -17,6 +17,22 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
+    public boolean bookCategoriesCompare(String userCateg, String bookCateg){
+        if(userCateg == "children") {
+            if (bookCateg == "children") {
+                return true;
+            }
+            return false;
+        }
+        else if(userCateg == "teenage"){
+            if(bookCateg != "adult"){
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+
     public Book saveBook(Book book) {
         log.info("Inside saveBook of BookService");
         return bookRepository.save(book);

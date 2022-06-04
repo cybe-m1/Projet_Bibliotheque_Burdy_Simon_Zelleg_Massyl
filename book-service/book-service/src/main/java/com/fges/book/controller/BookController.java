@@ -37,7 +37,7 @@ public class BookController {
 
     @PostMapping
     public Book saveBook( @RequestBody Book book){
-        //log.info("Inside saveBook method of BookController");
+        log.info("Inside saveBook method of BookController");
         return bookService.saveBook(book);
     }
     @GetMapping
@@ -47,16 +47,28 @@ public class BookController {
 
     @PutMapping("/id/{bookId}")
     public Book bookPrint(@PathVariable("bookId") Long bookId, @RequestBody BookAssignRequestDto bookAssign) throws Exception {
-        //Requete sur le service user -> ajoute +1 a l'attribut numberOfBooks du user
-        Integer countNumberOfBooks = restTemplate.getForObject("http://USER-SERVICE/api/number-of-books/" + bookAssign.getUserId(), Integer.class);
-        log.info("user with id : {} has {} number of books", bookAssign.getUserId(),countNumberOfBooks);
-        if(countNumberOfBooks < 3) {
-            Integer newNumberOfBooks = restTemplate.getForObject("http://USER-SERVICE/api/incr-number-of-books/" + bookAssign.getUserId(), Integer.class);
-            log.info("new number of books : {}", bookAssign.getUserId());
-            return bookService.bookPrint(bookId, bookAssign.getUserId());
+        String bookCateg = bookService.getBookById(bookId).getCategory();
+        log.info("Book Catagory is : {}", bookCateg);
+        Long userId = bookAssign.getUserId();
+        log.info("Id of user is : {}", userId);
+        UserDTO user = restTemplate.getForObject("http://USER-SERVICE/api/id/" + userId, UserDTO.class);
+        String userCateg = user.getAgeCategorie();
+        log.info("User age catagory is : {}", userCateg);
+        Integer userNumberOfBooks = restTemplate.getForObject("http://USER-SERVICE/api/number-of-books/" + userId, Integer.class);
+        log.info("user with id : {} has {} number of books", bookAssign.getUserId(),userNumberOfBooks);
+        boolean ahtorizeToGetBook = bookService.bookCategoriesCompare(userCateg, bookCateg);
+        log.info("User : {} is athorized to print this book : {}", user.getUsername(), ahtorizeToGetBook);
+        if(userNumberOfBooks < 3) {
+            if(ahtorizeToGetBook) {
+                Integer newNumberOfBooks = restTemplate.getForObject("http://USER-SERVICE/api/incr-number-of-books/" + userId, Integer.class);
+                log.info("new number of books : {}", newNumberOfBooks);
+                return bookService.bookPrint(bookId, userId);
+            }
         }
         return bookService.getBookById(bookId);
     }
+
+    public Book returnBook(@PathVariable("bookId") Long bookId)
 
     @GetMapping("/id/{bookId}/users")
     public Object[] getUsersByBookId(@PathVariable("bookId") Long bookId) throws Exception, UserIdNotFound {
