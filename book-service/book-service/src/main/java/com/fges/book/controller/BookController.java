@@ -68,7 +68,15 @@ public class BookController {
         return bookService.getBookById(bookId);
     }
 
-    public Book returnBook(@PathVariable("bookId") Long bookId)
+    @PutMapping("/return/id/{bookId}")
+    public Book returnBook(@PathVariable("bookId") Long bookId ,@RequestBody BookAssignRequestDto bookAssign) throws Exception{
+        Long userId = bookAssign.getUserId();
+        UserDTO user = restTemplate.getForObject("http://USER-SERVICE/api/id/" + userId, UserDTO.class);
+        restTemplate.getForObject("http://USER-SERVICE/api/decr-number-of-books/" + userId, Integer.class);
+        Book book = bookService.getBookById(bookId);
+        book.getUsersIds().remove(userId);
+        return book;
+    }
 
     @GetMapping("/id/{bookId}/users")
     public Object[] getUsersByBookId(@PathVariable("bookId") Long bookId) throws Exception, UserIdNotFound {
