@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 public class Category {
 
     private Long categoryId;
-    private enum categoryType {enfant, Ado  ,Adulte};
+    private enum categoryType {children, teen, adult};
 }
