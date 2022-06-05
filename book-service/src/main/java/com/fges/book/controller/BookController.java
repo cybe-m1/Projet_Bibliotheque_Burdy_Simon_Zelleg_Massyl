@@ -91,10 +91,10 @@ public class BookController {
         }
     }
 
-    /*@GetMapping("")
-    public Object[] getBooksByUserId(@PathVariable("userId") Long userId) throws UserIdNotFound {
-
-    }*/
+    @GetMapping("/userId/{userId}/books")
+    public List<Book> getBooksByUserId(@PathVariable("userId") Long userId) throws UserIdNotFound {
+        return bookService.getFilteredListOfBooks(bookService.getAll(), userId);
+      }
 
     @GetMapping("/id/{bookId}")
     public Book getBookById(@PathVariable("bookId") Long bookId ) throws Exception{

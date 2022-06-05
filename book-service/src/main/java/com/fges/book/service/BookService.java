@@ -3,10 +3,12 @@ import com.fges.book.BookNotFoundException;
 import com.fges.book.entity.Book;
 import com.fges.book.entity.UserDTO;
 import com.fges.book.repository.BookRepository;
+import com.sun.source.tree.LambdaExpressionTree;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -77,7 +79,20 @@ public class BookService {
             throw new BookNotFoundException("Book does not exist ...");
         }
     }
-    
+
+    public List<Book> getFilteredListOfBooks(List<Book> all, Long userId) {
+        List<Book> filtered = new ArrayList<>();
+        for(Book book : all){
+            if(book.getUsersIds().contains(userId)){
+                filtered.add(book);
+            }
+        }
+        return filtered;
+    }
+
+    /*public List<Book> getBooksByUserId(Long userId) {
+        return bookRepository.findAllBooksByUserIdInUserIdsBooks(userId);
+    }*/
 }
 
 
