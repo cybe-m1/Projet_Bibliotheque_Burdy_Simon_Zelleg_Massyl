@@ -36,7 +36,7 @@ public class BookController {
     }
 
     @PostMapping
-    public Book saveBook( @RequestBody Book book){
+    public Book saveBook(@RequestBody Book book){
         log.info("Inside saveBook method of BookController");
         return bookService.saveBook(book);
     }
@@ -91,6 +91,10 @@ public class BookController {
         }
     }
 
+    /*@GetMapping("")
+    public Object[] getBooksByUserId(@PathVariable("userId") Long userId) throws UserIdNotFound {
+
+    }*/
 
     @GetMapping("/id/{bookId}")
     public Book getBookById(@PathVariable("bookId") Long bookId ) throws Exception{
@@ -109,10 +113,12 @@ public class BookController {
     }
 
     @DeleteMapping(value="/delete/{bookId}")
-    public Book delete(@PathVariable Long bookId) throws Exception {
+    public String delete(@PathVariable Long bookId) throws Exception {
         Book toDelete = bookService.getBookById(bookId);
+        log.info("Book to delete : {}" ,toDelete.getName());
         bookService.deleteBookById(bookId);
-        return toDelete;
+        log.info("book to delete has id : {}, name of book : {}", toDelete.getBookId(), toDelete.getName());
+        return "BookId : "  + toDelete.getBookId() + "\nName of book : "+ toDelete.getName();
     }
 
 }

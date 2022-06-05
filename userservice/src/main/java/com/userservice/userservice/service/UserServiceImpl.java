@@ -113,4 +113,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setNumberOfBooks(user.getNumberOfBooks() + 1);
         return user.getNumberOfBooks();
     }
+
+    public Integer decrNumberofBooksForUser(Long userId) throws Exception {
+        User user = userRepo.findById(userId).orElseThrow(() -> new Exception("User not found"));
+        if(user.getNumberOfBooks() > 0){
+            user.setNumberOfBooks(user.getNumberOfBooks() - 1);
+            return user.getNumberOfBooks();
+        }
+        else {
+            throw new Exception("This user has 0 books borrowed");
+        }
+      }
 }

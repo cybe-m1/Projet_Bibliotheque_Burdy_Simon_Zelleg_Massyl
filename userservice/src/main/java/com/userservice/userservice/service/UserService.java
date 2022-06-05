@@ -24,4 +24,6 @@ public interface UserService {
     Integer incrNumberofBooksForUser(Long userId) throws Exception;
 
     Integer getNumberOfBooksByUserId(Long userId) throws Exception;
+
+    Integer decrNumberofBooksForUser(Long userId) throws Exception;
 }

@@ -71,6 +71,7 @@ public class BookService {
 
     public void deleteBookById(Long bookId) throws BookNotFoundException {
         if(bookRepository.existsById(bookId)) {
+            log.info("inside correct condition, juste before deleting in book service");
             bookRepository.deleteById(bookId);
         } else {
             throw new BookNotFoundException("Book does not exist ...");

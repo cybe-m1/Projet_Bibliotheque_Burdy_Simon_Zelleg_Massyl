@@ -77,6 +77,11 @@ public class UserRessource {
         return userService.incrNumberofBooksForUser(userId);
     }
 
+    @GetMapping("/decr-number-of-books/{userId}")
+    public Integer decrNumberofBooksForUser(@PathVariable Long userId) throws Exception{
+        return userService.decrNumberofBooksForUser(userId);
+    }
+
     @PutMapping
     public User update(@RequestBody User user) throws Exception {
         return userService.updateUser(user);
