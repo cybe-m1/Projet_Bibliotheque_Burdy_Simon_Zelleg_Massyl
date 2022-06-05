@@ -6,6 +6,8 @@
 - Utilisateurs
 - Commentaires
 - Authentification
+- Eureka Server
+- API Gateway
 
 
 
