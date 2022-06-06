@@ -40,14 +40,15 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    public Book bookPrint(Book book, Long userId){
+    public Book bookPrint(Long bookId, Long userId) throws Exception{
+        Book book = bookRepository.findBookByBookId(bookId).orElseThrow(() -> new Exception("Book not found"));
         book.getUsersIds().add(userId);
         log.info("ajoute bien le userId a la liste dans book");
         return bookRepository.save(book);
     }
-    public Book bookPrint(Long bookId, Long userId) throws Exception {
+    /*public Book bookPrint(Long bookId, Long userId) throws Exception {
         return bookPrint(getBookById(bookId), userId);
-    }
+    }*/
 
     /*public List<Long> getUsersIdsByBookId(Long bookId){
         return bookRepository.findUserIdsByBookId(bookId);

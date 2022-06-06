@@ -10,7 +10,7 @@ spring:
         - id: USER-SERVICE
           uri : lb://USER-SERVICE
           predicates:
-            - Path=/users/**
+            - Path=/api/**
         - id: BOOK-SERVICE
           uri: lb://BOOK-SERVICE
           predicates:

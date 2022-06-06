@@ -62,7 +62,6 @@ public class BookController {
             if (userNumberOfBooks < 3) {
                 if (ahtorizeToGetBook) {
                     restTemplate.getForObject("http://USER-SERVICE/api/incr-number-of-books/" + userId, Integer.class);
-                    //restTemplate.getForObject("http://USER-SERVICE/api/add-to-history/" + userId + "/" + bookId, String.class);
                     return bookService.bookPrint(bookId, userId);
                 }
             }

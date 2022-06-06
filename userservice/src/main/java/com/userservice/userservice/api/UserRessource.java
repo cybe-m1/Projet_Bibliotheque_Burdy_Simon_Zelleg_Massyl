@@ -11,13 +11,11 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import com.userservice.userservice.domain.Role;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -81,22 +79,6 @@ public class UserRessource {
     public Integer decrNumberofBooksForUser(@PathVariable Long userId) throws Exception{
         return userService.decrNumberofBooksForUser(userId);
     }
-
-    /*@GetMapping("/add-to-history/{id}/{bookId}")
-    public Long addToHistory(@PathVariable Long userId, @PathVariable Long bookId) throws Exception{
-        return userService.addToHistory(userId, bookId);
-    }
-
-    @GetMapping("/searchInHistory/{id}/{bookId}")
-    public boolean searchInHistory(@PathVariable Long userId, @PathVariable Long bookId) throws Exception{
-        return userService.searchInHistory(userId, bookId);
-    }
-
-    @GetMapping("/{userId}/history")
-    public List<Long> getHistoryOfBooks(@PathVariable Long userId) throws Exception {
-        return userService.getHistoryOfBooks(userId);
-    }*/
-
 
     @PutMapping
     public User update(@RequestBody User user) throws Exception {
