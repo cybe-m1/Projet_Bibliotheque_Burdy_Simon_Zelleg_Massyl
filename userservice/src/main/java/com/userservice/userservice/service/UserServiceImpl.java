@@ -124,4 +124,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new Exception("This user has 0 books borrowed");
         }
       }
+
+    /*public Long addToHistory(Long userId, Long bookId) throws Exception {
+        User user = userRepo.findById(userId).orElseThrow(() -> new Exception("User not found"));
+        user.getBooksHistory().add(bookId);
+        return bookId;
+    }
+
+    public boolean searchInHistory(Long userId, Long bookId) throws Exception {
+        User user = userRepo.findById(userId).orElseThrow(() -> new Exception("User not found"));
+        return user.getBooksHistory().contains(bookId);
+    }
+
+    public List<Long> getHistoryOfBooks(Long userId) throws Exception {
+        User user = userRepo.findById(userId).orElseThrow(() -> new Exception("User not found"));
+        return user.getBooksHistory();
+    }*/
 }

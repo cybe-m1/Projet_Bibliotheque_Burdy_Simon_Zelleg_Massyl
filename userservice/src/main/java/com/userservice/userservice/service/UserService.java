@@ -26,4 +26,10 @@ public interface UserService {
     Integer getNumberOfBooksByUserId(Long userId) throws Exception;
 
     Integer decrNumberofBooksForUser(Long userId) throws Exception;
+
+    /*Long addToHistory(Long userId, Long bookId) throws Exception;
+
+    boolean searchInHistory(Long userId, Long bookId) throws Exception;
+
+    List<Long> getHistoryOfBooks(Long userId) throws Exception;*/
 }

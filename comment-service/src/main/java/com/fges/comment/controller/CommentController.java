@@ -1,6 +1,7 @@
 package com.fges.comment.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.fges.comment.CommentNotFoundException;
 import com.fges.comment.UserOrBookNotFoundException;
@@ -29,13 +30,17 @@ public class CommentController {
         Long userId = comment.getUserId();
         BookDTO bookMatching = restTemplate.getForObject("http://BOOK-SERVICE/books/id/"+ bookId, BookDTO.class);
         UserDTO userMatching = restTemplate.getForObject("http://USER-SERVICE/api/id/"+ userId, UserDTO.class);
-        if((bookMatching instanceof BookDTO) && (userMatching instanceof UserDTO)){
-            return commentService.saveComment(comment);
+        boolean searchInHistory = restTemplate.getForObject("http://USER-SERVICE/api/searchInHistory/"+ userId + "/" + bookId, Boolean.class);
+        if((bookMatching instanceof BookDTO) && (userMatching instanceof UserDTO)) {
+            //if (searchInHistory) {
+                return commentService.saveComment(comment);
+            //}
         }
         else {
-            throw new UserOrBookNotFoundException("User or Book dont exist");
+            //throw new UserOrBookNotFoundException("User or Book dont exist");
+            return null;
         }
-
+        //return null;
     }
 
     @GetMapping

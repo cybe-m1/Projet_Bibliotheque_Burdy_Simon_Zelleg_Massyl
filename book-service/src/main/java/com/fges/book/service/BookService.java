@@ -42,6 +42,7 @@ public class BookService {
 
     public Book bookPrint(Book book, Long userId){
         book.getUsersIds().add(userId);
+        log.info("ajoute bien le userId a la liste dans book");
         return bookRepository.save(book);
     }
     public Book bookPrint(Long bookId, Long userId) throws Exception {
@@ -88,6 +89,11 @@ public class BookService {
             }
         }
         return filtered;
+    }
+
+    public String getBookNameByBookId(Long bookId) throws Exception{
+        Book book = bookRepository.findBookByBookId(bookId).orElseThrow(() -> new Exception("Book not found"));
+        return book.getName();
     }
 
     /*public List<Book> getBooksByUserId(Long userId) {

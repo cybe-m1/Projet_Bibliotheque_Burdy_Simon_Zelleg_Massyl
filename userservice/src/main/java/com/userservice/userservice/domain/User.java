@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static javax.persistence.FetchType.EAGER;
 
@@ -26,6 +27,8 @@ public class User {
     private Integer numberOfBooks = 0;
     @ManyToMany(fetch = EAGER)
     private Collection<Role> roles = new ArrayList<>();
+
+    //private List<Long> booksHistory;
     public String getAgeCategorie(){
         String categ = "";
         if(this.age <= 13){

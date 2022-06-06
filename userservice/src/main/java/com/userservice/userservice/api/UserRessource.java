@@ -82,6 +82,22 @@ public class UserRessource {
         return userService.decrNumberofBooksForUser(userId);
     }
 
+    /*@GetMapping("/add-to-history/{id}/{bookId}")
+    public Long addToHistory(@PathVariable Long userId, @PathVariable Long bookId) throws Exception{
+        return userService.addToHistory(userId, bookId);
+    }
+
+    @GetMapping("/searchInHistory/{id}/{bookId}")
+    public boolean searchInHistory(@PathVariable Long userId, @PathVariable Long bookId) throws Exception{
+        return userService.searchInHistory(userId, bookId);
+    }
+
+    @GetMapping("/{userId}/history")
+    public List<Long> getHistoryOfBooks(@PathVariable Long userId) throws Exception {
+        return userService.getHistoryOfBooks(userId);
+    }*/
+
+
     @PutMapping
     public User update(@RequestBody User user) throws Exception {
         return userService.updateUser(user);
