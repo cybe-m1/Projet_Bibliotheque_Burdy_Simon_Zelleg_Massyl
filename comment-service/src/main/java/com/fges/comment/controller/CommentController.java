@@ -1,5 +1,7 @@
 package com.fges.comment.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,13 +32,17 @@ public class CommentController {
         Long userId = comment.getUserId();
         BookDTO bookMatching = restTemplate.getForObject("http://BOOK-SERVICE/books/id/"+ bookId, BookDTO.class);
         UserDTO userMatching = restTemplate.getForObject("http://USER-SERVICE/api/id/"+ userId, UserDTO.class);
+        Object[] history = restTemplate.getForObject("http://BOOK-SERVICE/books/userId/" + userId + "/history", Object[].class);
+        List<Object> historyList = Arrays.asList(history);
         if((bookMatching instanceof BookDTO) && (userMatching instanceof UserDTO)) {
-            return commentService.saveComment(comment);
+            if(historyList.contains(bookMatching)){
+                return commentService.saveComment(comment);
+            }
         }
         else {
-            //throw new UserOrBookNotFoundException("User or Book dont exist");
-            return null;
+            throw new UserOrBookNotFoundException("User or Book dont exist");
         }
+        return null;
     }
 
     @GetMapping
