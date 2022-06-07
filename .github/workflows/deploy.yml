@@ -1,0 +1,22 @@
+name: Build and Push SpringBoot Image to Google Cloud Platform (GCP) Vm
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build-push-gcr:
+    name: Build and Push to VM
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: test 
+      uses: actions/checkout@v2
+            # Make sure the @v0.5.4 matches the current version of the
+  
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@master
+      with:
+        host: 35.195.216.63
+        username: ${{ secrets.VM_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: mkdir ~/tmp > /dev/null ; rm -rf ~/tmp/* ; cd ~/tmp ; git clone git@github.com:cybe-m1/Projet_Bibliotheque_Burdy_Simon_Zelleg_Massyl.git ; cd  Projet_Bibliotheque_Burdy_Simon_Zelleg_Massyl ; docker-compose up -d --build ; docker-compose -f apps-docker-compose.yml up -d --build --no-dep app-books app-user app-comments
