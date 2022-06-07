@@ -42,7 +42,6 @@ Micro services project simulating an online library.
 - The commentary also includes a score from 0 to 5
 - It is associated with the book and the user
 ### *Eureka Sever*
-***Important*** Put URI FOR EUREKA SERVER
 ### *Gateway Service*
 A gateway has been set up on port 9191, so that all microservices can be reached on this same port
 ## *Deploy*
