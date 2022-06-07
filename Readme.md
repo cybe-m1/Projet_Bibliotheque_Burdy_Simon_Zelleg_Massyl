@@ -39,7 +39,7 @@ Micro services project simulating an online library.
 - A book is associated with the user when it is borrowed
 ### *Comment Service*
 - A user can leave a comment after returning the book.
-- The commentary also includes a score from 0 to 5
+- The commentary also includes a score from 0 to 5.
 - It is associated with the book and the user
 ### *Eureka Sever*
 ### *Gateway Service*
