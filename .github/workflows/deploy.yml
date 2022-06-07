@@ -1,4 +1,4 @@
-name: Build and Push SpringBoot Image to Google Cloud Platform (GCP) Vm
+name: Build and Push SpringBoot Image to VM for BACK
 on:
   push:
     branches: [ main ]
