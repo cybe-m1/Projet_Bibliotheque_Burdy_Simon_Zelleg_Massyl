@@ -16,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -58,14 +55,27 @@ public class BookController {
         Integer userNumberOfBooks = restTemplate.getForObject("http://USER-SERVICE/api/number-of-books/" + userId, Integer.class);
         boolean ahtorizeToGetBook = bookService.bookCategoriesCompare(userCateg, bookCateg);
         //If user does not already borrowed the book
-        if(!bookService.getBookById(bookId).getUsersIds().contains(userId)) {
-            if (userNumberOfBooks < 3) {
-                if (ahtorizeToGetBook) {
-                    restTemplate.getForObject("http://USER-SERVICE/api/incr-number-of-books/" + userId, Integer.class);
-                    return bookService.bookPrint(bookId, userId);
+        log.info("numberofbooks : {}", userNumberOfBooks);
+        log.info("auth : {}", ahtorizeToGetBook);
+        if (userNumberOfBooks < 3) {
+            if (ahtorizeToGetBook) {
+                    log.info("juste avant la merde");
+                    boolean isKnown = bookService.getBookById(bookId).getUsersIds().containsKey(userId);
+                    //log.info("isKnown : {}, isKnownAndIsActive : {}", isKnown, isKnownAndIsActive);
+                    if (!isKnown) {
+                        log.info("il a passé la validation freroww");
+                        restTemplate.getForObject("http://USER-SERVICE/api/incr-number-of-books/" + userId, Integer.class);
+                        return bookService.bookPrint(bookId, userId);
+                    }
+                    else {
+                        boolean isKnownAndIsActive = bookService.getBookById(bookId).getUsersIds().get(userId);
+                        if(!isKnownAndIsActive){
+                            restTemplate.getForObject("http://USER-SERVICE/api/incr-number-of-books/" + userId, Integer.class);
+                            return bookService.bookPrint(bookId, userId);
+                        }
+                    }
                 }
             }
-        }
         return bookService.getBookById(bookId);
     }
 
@@ -79,8 +89,8 @@ public class BookController {
         UserDTO user = restTemplate.getForObject("http://USER-SERVICE/api/id/" + userId, UserDTO.class);
         restTemplate.getForObject("http://USER-SERVICE/api/decr-number-of-books/" + userId, Integer.class);
         Book book = bookService.getBookById(bookId);
-        List<Long> newUserIds = book.getUsersIds();
-        newUserIds.remove(userId);
+        Map<Long, Boolean> newUserIds = book.getUsersIds();
+        newUserIds.put(userId, false);
         Book newBook = new Book(book.getBookId(), book.getName(), book.getCategory(), newUserIds);
         update(newBook);
         return newBook;
@@ -88,11 +98,12 @@ public class BookController {
 
     @GetMapping("/id/{bookId}/users")
     public Object[] getUsersByBookId(@PathVariable("bookId") Long bookId) throws Exception, UserIdNotFound {
-        List<Long> userIds = bookService.getBookById(bookId).getUsersIds();
-        if (!userIds.isEmpty()) {
-            String userIdsParsed = userIds.stream().map(Object::toString)
+        Map<Long, Boolean> userIds = bookService.getBookById(bookId).getUsersIds();
+        Set<Long> mySetIds = userIds.keySet();
+        List<Long> myListIds = new ArrayList<>(mySetIds);
+        if (!myListIds.isEmpty()) {
+            String userIdsParsed = myListIds.stream().map(Object::toString)
                     .collect(Collectors.joining(","));
-            log.info("userIdParsed : {}", userIdsParsed);
             return restTemplate.getForObject("http://USER-SERVICE/api/userIds/" + userIdsParsed, Object[].class);
         } else {
             return new Object[]{};
@@ -102,7 +113,12 @@ public class BookController {
     @GetMapping("/userId/{userId}/books")
     public List<Book> getBooksByUserId(@PathVariable("userId") Long userId) throws UserIdNotFound {
         return bookService.getFilteredListOfBooks(bookService.getAll(), userId);
-      }
+    }
+
+    @GetMapping("/userId/{userId}/history")
+    public List<Book> getBookHistoryForUser(@PathVariable("userId") Long userId) throws UserIdNotFound {
+        return bookService.getPreviousBook(bookService.getAll(), userId);
+    }
 
     @GetMapping("/id/{bookId}")
     public Book getBookById(@PathVariable("bookId") Long bookId ) throws Exception{
