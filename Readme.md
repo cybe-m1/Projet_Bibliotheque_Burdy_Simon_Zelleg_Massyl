@@ -9,9 +9,10 @@
     - [Comment Service](#comment-service)
     - [Eureka Server](#eureka-server)
     - [Gateway Service](#gateway-service)
-3. [Deploy](#deploy)
-4. [Uri For Testing](#uri-for-testing)
-5. [Creating Databases(Only on local)](#creating-databases(only-on-local))
+3. [Run Using Docker](#run-using-docker)
+4. [Deploy](#deploy)
+5. [Uri For Testing](#uri-for-testing)
+6. [Creating Databases(Only on local)](#creating-databases(only-on-local))
    - [Create Databases](#create-databases)
    - [Create User](#create-user)
    - [Add Role To User](#add-role-to-user)
@@ -54,6 +55,23 @@ Micro services project simulating an online library.
 Eureka server to see the status of the different microservices
 ### *Gateway Service*
 A gateway has been set up on port 9191, so that all microservices can be reached on this same port
+## *Run Using Docker*
+In order to start the databases, and run all microservices using docker, use the following commands
+```bash
+    # Run eureka server and app gateway
+    docker-compose up -d
+    # Run User, Book, Comment service and Database
+    docker-compose -f apps-docker-compose.yml up -d --build
+```
+At times, it may be necessary to restart certain micro-services, if the latter is not displayed in the list:
+```bash
+    # Get list of containers
+    docker ps
+```
+Use this command to restart it
+```bash
+    docker-compose -f apps-docker-compose.yml restart app-books
+```
 ## *Deploy*
 - Creation of images with *Docker*
 - Setting up pipelines on *GithubAction*
@@ -61,17 +79,17 @@ A gateway has been set up on port 9191, so that all microservices can be reached
 ## *Uri For Testing*
 A collection file *Biblio_Project.json* has been added to the directory, it contains the most important API calls of the different microservices
 ## *Creating Databases(Only on local)*
-### Create Databases
+### *Create Databases*
 ```bash
     create database userservice; -- Creates the new database
     create database bookservice; -- Creates the new database
     create database commentservice; -- Creates the new database
 ```
-### Create User
+### *Create User*
 ```bash
     create user 'bibliouser'@'%' identified by 'biblio123'; -- Creates the user
 ```
-### Add Role To User
+### *Add Role To User*
 ```bash
     grant all on userservice.* to 'bibliouser'@'%'; -- Gives all privileges to the new user on the newly created database
     grant all on bookservice.* to 'bibliouser'@'%'; -- Gives all privileges to the new user on the newly created database

@@ -20,14 +20,14 @@ public class BookService {
     private BookRepository bookRepository;
 
     public boolean bookCategoriesCompare(String userCateg, String bookCateg){
-        if(userCateg == "children") {
-            if (bookCateg == "children") {
+        if(userCateg.equals("children")) {
+            if (bookCateg.equals("children")) {
                 return true;
             }
             return false;
         }
-        else if(userCateg == "teenage"){
-            if(bookCateg != "adult"){
+        else if(userCateg.equals("teen")){
+            if(!bookCateg.equals("adult")){
                 return true;
             }
             return false;
