@@ -75,7 +75,6 @@ Use this command to restart it
 ## *Deploy*
 - Creation of images with *Docker*
 - Setting up pipelines on *GithubAction*
-- Deployment on a VM with public ip *35.195.216.63*
 ## *Uri For Testing*
 A collection file *Biblio_Project.json* has been added to the directory, it contains the most important API calls of the different microservices
 ## *Creating Databases(Only on local)*
