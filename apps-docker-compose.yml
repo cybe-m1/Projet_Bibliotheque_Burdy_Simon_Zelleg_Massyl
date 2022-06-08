@@ -34,14 +34,14 @@ services:
         - db
       ports:
         - "9003:9003"
-  front:
-      container_name: front
-      build: .
-      depends_on:
-        - app-user
-        - app-books
-      ports:
-        - "3000:3000"
+  #front:
+  #    container_name: front
+  #    build: .
+  #    depends_on:
+  #      - app-user
+  #      - app-books
+  #    ports:
+  #      - "3000:3000"
   db:
       container_name: db
       image: mysql/mysql-server
