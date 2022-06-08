@@ -11,6 +11,10 @@
     - [Gateway Service](#gateway-service)
 3. [Deploy](#deploy)
 4. [Uri For Testing](#uri-for-testing)
+5. [Creating Databases(Only on local)](#creating-databases(only-on-local))
+   - [Create Databases](#create-databases)
+   - [Create User](#create-user)
+   - [Add Role To User](#add-role-to-user)
 
 ## *Description*
 * Membres du Binôme
@@ -39,6 +43,7 @@ Micro services project simulating an online library.
   the user also receives a refresh token in order to update it
 - All other actions should be reserved for authenticated users.
 ### *Book Service*
+- *Bugs* noticed anomalies: when creating a book, the query returns a 500 at times, but by running the query a few times (4-5 times) the book is created correctly
 - A book has a category (children (0-13 years), teen (13-18 years), adult).
 - A book is associated with the user when it is borrowed
 ### *Comment Service*
@@ -55,7 +60,23 @@ A gateway has been set up on port 9191, so that all microservices can be reached
 - Deployment on a VM with public ip *35.195.216.63*
 ## *Uri For Testing*
 A collection file *Biblio_Project.json* has been added to the directory, it contains the most important API calls of the different microservices
-
+## *Creating Databases(Only on local)*
+### Create Databases
+```bash
+    create database userservice; -- Creates the new database
+    create database bookservice; -- Creates the new database
+    create database commentservice; -- Creates the new database
+```
+### Create User
+```bash
+    create user 'bibliouser'@'%' identified by 'biblio123'; -- Creates the user
+```
+### Add Role To User
+```bash
+    grant all on userservice.* to 'bibliouser'@'%'; -- Gives all privileges to the new user on the newly created database
+    grant all on bookservice.* to 'bibliouser'@'%'; -- Gives all privileges to the new user on the newly created database
+    grant all on commentservice.* to 'bibliouser'@'%'; -- Gives all privileges to the new user on the newly created database
+```
 
 
 
